@@ -142,7 +142,7 @@ router.route('/findCharacter/:heroName').get(function (req, res) {
                 if(typeof character.aliases != 'undefined') {
                     characterAliaseName = character.aliases.toLowerCase();
                 }
-                
+
                 if(characterRealName.indexOf(heroName) > -1){
                     console.log("Found Match: "+ characterHeroName);
                     foundCharacters.push(character);
