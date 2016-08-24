@@ -14,7 +14,6 @@ var HeroSchema = new Schema({
     abilityList: String,
     affiliations: String,
     firstAppearance: String,
-    summary: String,
     aliases: String,
     partnerships: String,
     heroStatus: String,
