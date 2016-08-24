@@ -128,18 +128,22 @@ router.route('/findCharacter/:heroName').get(function (req, res) {
             var characterAliaseName = "";
             foundChar.forEach(function (character) {
                 characterHeroName = character.heroName.toLowerCase();
+
+                if(characterHeroName.indexOf(heroName) > -1){
+                    console.log("Found Match: "+ characterHeroName);
+                    foundCharacters.push(character);
+                }
+            });
+
+            foundChar.forEach(function (character) {
                 if(typeof character.realName != 'undefined') {
                     characterRealName = character.realName.toLowerCase();
                 }
                 if(typeof character.aliases != 'undefined') {
                     characterAliaseName = character.aliases.toLowerCase();
                 }
-
-
-                if(characterHeroName.indexOf(heroName) > -1){
-                    console.log("Found Match: "+ characterHeroName);
-                    foundCharacters.push(character);
-                }else if(characterRealName.indexOf(heroName) > -1){
+                
+                if(characterRealName.indexOf(heroName) > -1){
                     console.log("Found Match: "+ characterHeroName);
                     foundCharacters.push(character);
                 }else if(characterAliaseName.indexOf(heroName) > -1){
