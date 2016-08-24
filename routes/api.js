@@ -89,20 +89,65 @@ router.route('/deleteCharacter').delete(function (req, res) {
         });
 });
 /* Get Marvel Hero */
+router.route('/getMarvel').get(
+    function (req, res) {
+        console.log("Getting Marvel Characters");
+        HeroModel.find({universe: "Marvel"},
+            function (err, marvelCharacters) {
+                if(err){res.send(err)}
+
+                res.send(marvelCharacters);
+            })
+    }
+);
 /* Get DC Hero */
+router.route('/getDC').get(
+    function (req, res) {
+        console.log("Getting DC Characters");
+        HeroModel.find({universe: "DC"},
+            function (err, DC_Characters) {
+                if(err){res.send(err)}
+
+                res.send(DC_Characters);
+            })
+    }
+);
 /* Get Hero*/
 router.route('/findCharacter/:heroName').get(function (req, res) {
-    console.log('Finding: '+req.params.heroName+" "+req.params.realName);
-    console.log(req.body);
-    HeroModel.find({$or: [
-            {heroName: req.params.heroName},
-            {realName: req.params.heroName},
-            {aliases: req.params.heroName}]},
+    var foundCharacters = [];
+    var heroName = req.params.heroName;
+    console.log('Finding: '+req.params.heroName);
+    heroName = heroName.toLowerCase();
+    HeroModel.find(
         function(err, foundChar) {
             if (err){
                 res.send(err);
             }
-            res.send(foundChar);
+            var characterHeroName = "";
+            var characterRealName = "";
+            var characterAliaseName = "";
+            foundChar.forEach(function (character) {
+                characterHeroName = character.heroName.toLowerCase();
+                if(typeof character.realName != 'undefined') {
+                    characterRealName = character.realName.toLowerCase();
+                }
+                if(typeof character.aliases != 'undefined') {
+                    characterAliaseName = character.aliases.toLowerCase();
+                }
+
+
+                if(characterHeroName.indexOf(heroName) > -1){
+                    console.log("Found Match: "+ characterHeroName);
+                    foundCharacters.push(character);
+                }else if(characterRealName.indexOf(heroName) > -1){
+                    console.log("Found Match: "+ characterHeroName);
+                    foundCharacters.push(character);
+                }else if(characterAliaseName.indexOf(heroName) > -1){
+                    console.log("Found Match: "+ characterHeroName);
+                    foundCharacters.push(character);
+                }
+            });
+            res.send(foundCharacters);
         });
 });
 
