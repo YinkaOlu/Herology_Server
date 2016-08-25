@@ -89,10 +89,10 @@ router.route('/deleteCharacter').delete(function (req, res) {
         });
 });
 /* Get Marvel Hero */
-router.route('/getMarvel').get(
+router.route('/getBadGuys').get(
     function (req, res) {
-        console.log("Getting Marvel Characters");
-        HeroModel.find({universe: "Marvel"},
+        console.log("Getting Bad Characters");
+        HeroModel.find({heroStatus: "Villain"},
             function (err, marvelCharacters) {
                 if(err){res.send(err)}
 
@@ -101,10 +101,10 @@ router.route('/getMarvel').get(
     }
 );
 /* Get DC Hero */
-router.route('/getDC').get(
+router.route('/getGoodGuys').get(
     function (req, res) {
-        console.log("Getting DC Characters");
-        HeroModel.find({universe: "DC"},
+        console.log("Getting Good Characters");
+        HeroModel.find({heroStatus: "Hero"},
             function (err, DC_Characters) {
                 if(err){res.send(err)}
 
